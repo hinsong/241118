@@ -3,17 +3,13 @@
     <!-- 데이터 목록 -->
     <ul>
       <li v-for="item in paginatedData" :key="item.id">
-        {{ item.id }}  {{ item.title }}
+        <a>{{ item.id }} {{ item.title }}</a>
       </li>
-
-      <div>
-        <button @click="minusPage">이전</button>
-        <button @click="plusPage">다음</button>
-      </div>
     </ul>
 
     <!-- 페이지네이션 컴포넌트 -->
     <pagination
+      v-model="currentPage"
       :records="items.length"
       :per-page="itemsPerPage"
       @paginate="updatePage"
@@ -53,13 +49,13 @@ export default {
       this.currentPage = page;
     },
 
-    plusPage() {
-      this.currentPage += 1
-    },
+    // plusPage() {
+    //   this.currentPage += 1
+    // },
 
-    minusPage() {
-      this.currentPage -= 1
-    },
+    // minusPage() {
+    //   this.currentPage -= 1
+    // },
     // 데이터 총개수는 100개 -> ?
     // 데이터는 10개씩 로드하기 -> ? 
     async getlist() {
@@ -89,3 +85,25 @@ export default {
   },
 };
 </script>
+
+<style>
+/* .pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+} */
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  font-weight: bold;
+  background: #007bff;
+  color: white;
+}
+</style>
