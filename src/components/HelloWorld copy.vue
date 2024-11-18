@@ -3,13 +3,8 @@
     <!-- 데이터 목록 -->
     <ul>
       <li v-for="item in paginatedData" :key="item.id">
-        {{ item.id }}  {{ item.title }}
+        {{ item.name }}
       </li>
-
-      <div>
-        <button @click="minusPage">이전</button>
-        <button @click="plusPage">다음</button>
-      </div>
     </ul>
 
     <!-- 페이지네이션 컴포넌트 -->
@@ -32,7 +27,7 @@ export default {
     return {
       items: [], // 전체 데이터를 저장할 배열
       currentPage: 1, // 현재 페이지
-      itemsPerPage: 10, // 페이지당 항목 수
+      itemsPerPage: 5, // 페이지당 항목 수
     };
   },
   computed: {
@@ -43,49 +38,13 @@ export default {
       return this.items.slice(start, end);
     },
   },
-  mounted() {
-    this.getlist();
-  },
-
   methods: {
     // 페이지네이션 변경 처리
     updatePage(page) {
       this.currentPage = page;
     },
-
-    plusPage() {
-      this.currentPage += 1
-    },
-
-    minusPage() {
-      this.currentPage -= 1
-    },
-    // 데이터 총개수는 100개 -> ?
-    // 데이터는 10개씩 로드하기 -> ? 
-    async getlist() {
-      try {
-
-      await fetch('https://jsonplaceholder.typicode.com/posts?_start=0&_end=100', {
-        method: 'GET',
-      })
-      .then(response => response.json())
-      .then(json => this.items = json)
-      console.log(this.items)
-      
-      } catch(e) {
-        console.error(e)
-      }
-
-    }
-
-
   },
   created() {
-    // 예제 데이터 생성
-    // this.items = Array.from({ length: 50 }, (_, i) => ({
-    //   id: i + 1,
-    //   name: `Item ${i + 1}`,
-    // }));
   },
 };
 </script>
