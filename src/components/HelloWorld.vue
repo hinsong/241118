@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="list-container">
     <!-- 데이터 목록 -->
-    <ul>
-      <li v-for="item in paginatedData" :key="item.id">
-        <a>{{ item.id }} {{ item.title }}</a>
-      </li>
-    </ul>
+      <div class="list-item" v-for="item in paginatedData" :key="item.id">
+        <td ><a class="item-id">{{ item.id }}</a></td>
+        <td ><a class="item-title">{{ item.title }}</a></td>
+      </div>
+
 
     <!-- 페이지네이션 컴포넌트 -->
     <pagination
@@ -87,11 +87,47 @@ export default {
 </script>
 
 <style>
-/* .pagination {
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* 리스트 항목 사이의 간격 */
+  padding: 1rem;
+  max-width: 800px;
+  margin: auto; /* 가운데 정렬 */
+}
+
+.list-item {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.list-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.item-id {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+  text-align: left;
+}
+
+.item-title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+  text-align: right;
+}
+
+.pagination {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-} */
+}
 
 .pagination button {
   margin: 0 5px;
