@@ -1,12 +1,17 @@
 <template>
   <div>
     <div>
+      <!--
+      * 고도화 방안
+      1. 가져올 데이터 수를 입력한다.
+      2. v-model을 통해 바인딩
+      -->
       <input class="get-data-input" placeholder="가져올 데이터 개수 입력">
       <button class="get-data-button" type="button">데이터 가져오기</button>
     </div>
     <div class="list-container">
       <!-- 데이터 목록 -->
-      <div class="list-item" v-for="item in paginatedData" :key="item.id">
+      <div class="list-item" @click="showDetails(item)" v-for="item in paginatedData" :key="item.id">
         <td><a class="item-id">{{ item.id }}</a></td>
         <td><a class="item-title">{{ item.title }}</a></td>
       </div>
@@ -51,15 +56,6 @@ export default {
       this.currentPage = page;
     },
 
-    // plusPage() {
-    //   this.currentPage += 1
-    // },
-
-    // minusPage() {
-    //   this.currentPage -= 1
-    // },
-    // 데이터 총개수는 100개 -> ?
-    // 데이터는 10개씩 로드하기 -> ? 
     async getlist() {
       try {
 
@@ -74,7 +70,13 @@ export default {
         console.error(e)
       }
 
-    }
+    },
+
+    // 클릭 시 로컬 스토리지에 저장하고 상세 페이지로 이동
+    showDetails(item) {
+      localStorage.setItem('selectedItem', JSON.stringify(item));
+      this.$router.push({ name: 'DataDetails', params: { id: item.id } });
+    },
 
 
   },
