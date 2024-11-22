@@ -2,7 +2,7 @@
   <div>
     <div>
       <!--
-      * 고도화 방안
+      * 절차
       1. 가져올 데이터 수를 입력한다.
       2. v-model을 통해 바인딩
       -->
@@ -12,8 +12,7 @@
     <div class="list-container">
       <!-- 데이터 목록 -->
       <div class="list-item" @click="showDetails(item)" v-for="item in paginatedData" :key="item.id">
-        <td><a class="item-id">{{ item.id }}</a></td>
-        <td><a class="item-title">{{ item.title }}</a></td>
+        <span class="item-id">{{ item.id }}</span> - <span class="item-title">{{ item.title }}</span>
       </div>
 
 
