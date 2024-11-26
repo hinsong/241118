@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h2>Data Details</h2>
+    <button @click="$router.push({ name: 'DataEdit' })">수정하기</button> <!-- 수정하기를 클릭하면 DataEdit 페이지로 이동 -->
+    <h2>데이터 세부정보</h2>
+    <!-- 로컬스토리지에서 item에 받은 데이터를 바인딩 -->
     <p><strong>ID:</strong> {{ item.id }}</p>
     <p><strong>Title:</strong> {{ item.title }}</p>
     <p><strong>Body:</strong> {{ item.body }}</p>
@@ -9,6 +11,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -17,28 +20,15 @@ export default {
   },
   created() {
     // 로컬 스토리지에서 데이터를 가져옴
-    const itemData = localStorage.getItem('selectedItem');
-    if (itemData) {
-      this.item = JSON.parse(itemData);
-    } else {
-      // 로컬 스토리지에 데이터가 없는 경우, 직접 fetch를 통해 가져오는 로직 추가 가능
-      this.fetchData();
+    const itemData = localStorage.getItem('selectedItem');  // itmeData 변수에 로컬스토리지에 저장된 데이터 저장
+    if (itemData) { // 로컬스토리지에 저장된 데이터가 존재하면
+      this.item = JSON.parse(itemData); // item 변수에 JSON 형식으로 itemData 데이터 저장
+    } else {  // 데이터가 없으면
+      throw new Error('Not found data') // 에러 던지기
     }
   },
   methods: {
-    async fetchData() {
-      try {
-        const itemId = this.$route.params.id;
-        const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${itemId}`);
-        if (response.ok) {
-          this.item = await response.json();
-        } else {
-          console.error('데이터를 불러오는 데 실패했습니다.');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    
   },
 };
 </script>
