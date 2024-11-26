@@ -1,4 +1,11 @@
 
+ul {
+    list-style: none;  
+}
+
+li {
+    margin-right: 5px;
+}
 
 .list-container {
     display: flex;

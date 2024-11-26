@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import DataList from '@/components/DataList.vue';   // DataList
-import DataDetails from '@/components/DataDetails.vue';     // DataDetails
+import DataList from '@/views/DataList.vue';   // DataList
+import DataDetails from '@/views/DataDetails.vue';     // DataDetails
 
 Vue.use(Router);
 
