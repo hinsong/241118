@@ -1,18 +1,19 @@
 <!--
-* 절차
-1. getlist 함수 실행
-  1.1 mockingapi에 입력되어 있는 데이터를 불러옴
-  1.2 데이터에 정의된 items에 불러온 데이터를 저장
-  1.3 mounted()에 의해 렌더링된 DOM에 접근 가능
-1. v-model을 통해 바인딩
+불러온 데이터를 보여주는 메인페이지 DataList
+리스트 요소 클릭을 통해 상세정보 페이지(DataDetails)로 이동 가능
+등록하기 버튼을 통해 새 데이터를 만드는 DataCreate로 이동 가능
 -->
 <template>
   <div>
     <div>
+      <!-- 데이터를 등록하는 페이지인 DataCreate로 이동하는 버튼 -->
       <button type="button" @click="$router.push({ name: 'DataCreate' })">등록하기</button>
     </div>
     <div class="list-container">
-      <!-- 데이터 목록 -->
+      <!-- 
+      * 데이터 목록
+      - 각 리스트를 클릭하면 해당 item의 detail을 보여주는 페이지로 이동
+      -->
       <div class="list-item" @click="showDetails(item)" v-for="item in paginatedData" :key="item.id">
         <span class="item-id">{{ item.id }}</span> - <span class="item-title">{{ item.title }}</span>
       </div>
@@ -43,7 +44,7 @@ export default {
     };
   },
 
-  // 현재 페이지에 표시할 데이터
+  // computed: 반응형 데이터를 계산할 때 사용된다.
   computed: {
     paginatedData() {
       const start = (this.currentPage - 1) * this.itemsPerPage; // 현재 페이지에서 보여줄 데이터의 시작 인덱스
@@ -82,9 +83,11 @@ export default {
     // axios 사용하여 데이터 나열
     async getlist() {
       try {
-        const data = await axios // 불러온 데이터를 data 변수에 저장
+        const response = await axios // 서버로부터 온 전체 HTTP 응답 객체(data, status, statusText, headers, config)를 resopnse 변수에 저장 
           .get(`https://67460bfc512ddbd807faa73a.mockapi.io/api/v1/datas`)  // mockingapi 사용하여 저장된 데이터를 불러옴
-          .then((response) => response.data);
+          // await 사용하기 때문에 .then 메서드는 사용할 필요 없음
+
+        const data = response.data; // data 변수에 mockingapi에서 불러온 response객체 중 data 저장
 
         if (data) { // 데이터가 data 변수에 들어와 있다면
           this.items = data;  // items에 data를 입력

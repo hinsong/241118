@@ -24,8 +24,6 @@ export default {
     // About, 등 추가 가능
   }
 }
-
-
 </script>
 
 <style>
