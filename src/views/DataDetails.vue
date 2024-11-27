@@ -1,18 +1,22 @@
 <template>
   <div>
-    <button @click="$router.push({ name: 'DataEdit' })">수정하기</button> <!-- 수정하기를 클릭하면 DataEdit 페이지로 이동 -->
+    <button type="button" @click="$router.push({ name: 'DataEdit' })">수정하기</button> <!-- 수정하기를 클릭하면 DataEdit 페이지로 이동 -->
+    <button type="button" @click="deleteData">삭제하기</button> <!-- 삭제하기를 클릭하면 deleteData 함수 실행 -->
     <h2>데이터 세부정보</h2>
     <!-- 로컬스토리지에서 item에 받은 데이터를 바인딩 -->
     <p><strong>ID:</strong> {{ item.id }}</p>
     <p><strong>Title:</strong> {{ item.title }}</p>
     <p><strong>Body:</strong> {{ item.body }}</p>
     <p><strong>User ID:</strong> {{ item.userId }}</p>
+
   </div>
 </template>
 
 <script>
+import axios from "axios"
 
 export default {
+
   data() {
     return {
       item: {}, // 클릭한 항목의 세부 데이터를 저장할 객체
@@ -28,7 +32,22 @@ export default {
     }
   },
   methods: {
-    
+    async deleteData() {
+      try {
+        const data = await axios
+          .delete(`https://67460bfc512ddbd807faa73a.mockapi.io/api/v1/datas/${this.item.id}`)
+          .then((response) => response.data);
+
+        if (data) {
+          localStorage.removeItem('selectedItem')
+          alert('해당 데이터가 삭제되었습니다.')
+          return this.$router.push({ name: 'DataList' })
+        }
+      } catch(e) {
+        console.log(e)
+      }
+
+    }
   },
 };
 </script>
